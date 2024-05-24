@@ -822,3 +822,4 @@ inquiry_search_service_base_url: "{{ sunbird_search_service_api_base_url }}/v3/s
 
 #Knowlg Release-6.1.0
 dailcode_keyspace_name: "dialcodes"
+cloud_storage_dial_container_name: "dial"
