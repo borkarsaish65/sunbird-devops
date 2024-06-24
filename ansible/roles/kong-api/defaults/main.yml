@@ -7195,6 +7195,28 @@ kong_apis:
     config.required: false
     config.enabled: false
 
+- name: userOverview
+  uris: "{{ users_service_prefix }}/mlcore/v1/overview"
+  upstream_url: "{{ ml_core_service_url }}/v1/users/overview"
+  strip_uri: true
+  plugins:
+  - name: jwt
+  - name: cors
+  - "{{ statsd_pulgin }}"
+  - name: acl
+    config.whitelist:
+    - registryAccess
+  - name: rate-limiting
+    config.policy: local
+    config.hour: "{{ medium_rate_limit_per_hour }}"
+    config.limit_by: credential
+  - name: request-size-limiting
+    config.allowed_payload_size: "{{ small_request_size_limit }}"
+  - name: opa-checks
+    config.required: false
+    config.enabled: false
+
+
 - name: getProjectDetails
   uris: "{{ userProjects_service_prefix }}/mlprojects/v1/details"
   upstream_url: "{{ ml_project_service_url }}/v1/userProjects/details"
